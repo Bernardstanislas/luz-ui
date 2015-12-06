@@ -1,9 +1,9 @@
 const webpack = require('webpack');
-const config = require('./webpack.config');
+const configBuilder = require('./webpack.config').builder;
 const WebpackDevServer = require('webpack-dev-server');
 const WEBPACK_DEV_SERVER_PORT = 3000;
 
-new WebpackDevServer(webpack(config), {
+new WebpackDevServer(webpack(configBuilder(true)), {
     publicPath: '/',
     hot: true,
     historyApiFallback: true,
