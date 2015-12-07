@@ -4,10 +4,12 @@ import {attemptLogin} from '../../actions';
 import RaisedButton from 'material-ui/lib/raised-button';
 import TextField from 'material-ui/lib/text-field';
 import Paper from 'material-ui/lib/paper';
+import CircularProgress from 'material-ui/lib/circular-progress';
 import './style.scss';
 import palette from '../../style/palette.js';
 
-class Home extends Component {
+
+class Login extends Component {
     _handleLoginClick() {
         const {dispatch} = this.props;
         const email = this.refs.email.getValue();
@@ -16,6 +18,7 @@ class Home extends Component {
     }
 
     render() {
+        const {login: {loading, error}} = this.props;
         return (
             <div data-role='login-screen'>
                 <Paper zDepth={2}>
@@ -41,7 +44,14 @@ class Home extends Component {
                                 underlineFocusStyle={{borderColor: palette.primaryColor}}
                                 />
                             <div data-role='login'>
-                                <RaisedButton onClick={this._handleLoginClick.bind(this)} label='Log me in' primary={true} />
+                                <div data-role='error'>
+                                    {error && error.message}
+                                </div>
+                                {loading ?
+                                    <CircularProgress mode='indeterminate' color={palette.accentColor} size={0.5} style={{height: '36px'}}/>
+                                :
+                                    <RaisedButton onClick={this._handleLoginClick.bind(this)} label='Log me in' primary={true} />
+                                }
                             </div>
                         </div>
                     </div>
@@ -51,4 +61,4 @@ class Home extends Component {
     }
 }
 
-export default Home;
+export default Login;

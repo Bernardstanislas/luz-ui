@@ -1,17 +1,19 @@
 import {combineReducers} from 'redux';
-import {ATTEMPT_LOGIN, LOGIN_SUCCESS, LOGIN_FAILURE} from '../actions';
+import {ATTEMPT_LOGIN, LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE} from '../actions';
 
-const loggedIn = (state = false, action) => {
+const login = (state = {logged: false, error: null, loading: false}, action) => {
     switch(action.type) {
+        case LOGIN_REQUEST:
+            return {...state, loading: true};
         case LOGIN_SUCCESS:
-            return action.authData;
+            return {logged: true, error: null, authData: action.authData, loading: false};
         case LOGIN_FAILURE:
-            return false;
+            return {logged: false, error: action.error, authData: false, loading: false};
         default:
             return state;
     }
 };
 
 export default combineReducers({
-    loggedIn
+    login
 });

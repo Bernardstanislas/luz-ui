@@ -4,6 +4,7 @@ import createStore from './store';
 import {Provider} from 'react-redux';
 import Container from './views';
 import { DevTools, DebugPanel, LogMonitor } from 'redux-devtools/lib/react';
+import './style/main.scss';
 
 const store = createStore();
 

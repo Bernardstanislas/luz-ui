@@ -41,6 +41,11 @@ const configBuilder = function(DEV) {
                 {
                     test: /(\.scss|\.css)$/,
                     loader: ExtractTextPlugin.extract('style', 'css!sass')
+                },
+                {
+                    test: /\.jpg$/,
+                    loader: 'url-loader',
+                    query: { mimetype: 'image/jpg' }
                 }
             ]
         }
