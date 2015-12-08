@@ -12,7 +12,7 @@ const configBuilder = function(DEV) {
         output: {
             path: __dirname,
             filename: 'luz-ui.js',
-            publicPath: '/'
+            publicPath: './'
         },
         plugins: DEV ? [
             new webpack.HotModuleReplacementPlugin(),
