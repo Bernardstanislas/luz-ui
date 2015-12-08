@@ -6,7 +6,7 @@ import Container from './views';
 import { DevTools, DebugPanel, LogMonitor } from 'redux-devtools/lib/react';
 import './style/main.scss';
 
-const store = createStore();
+export const store = createStore();
 
 const Main = props => !__DEV__ ? (
     <Provider store={store}>

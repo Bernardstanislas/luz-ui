@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import 'react-toolbox/lib/commons.scss';
 import {attemptLogin} from '../../actions';
 import RaisedButton from 'material-ui/lib/raised-button';
 import TextField from 'material-ui/lib/text-field';

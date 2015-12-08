@@ -1,0 +1,14 @@
+@import '../../style/palette';
+
+[data-role='main'] {
+    display: flex;
+    justify-content: center;
+    padding-top: 40px;
+
+    [data-role='panel'] {
+        background-color: red;
+        width: 1200px;
+        max-width: 90vw;
+    }
+
+}

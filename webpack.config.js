@@ -1,5 +1,4 @@
 const path = require('path');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
@@ -15,16 +14,26 @@ const configBuilder = function(DEV) {
             filename: 'luz-ui.js',
             publicPath: '/'
         },
-        plugins: [
+        plugins: DEV ? [
             new webpack.HotModuleReplacementPlugin(),
             new webpack.DefinePlugin({
                 __DEV__: DEV
             }),
-            new ExtractTextPlugin('styles.css')
+            new HtmlWebpackPlugin({
+                inject: 'html',
+                templateContent: '<html><head><title>Luz</title></head><body><div class="luz"/></body></html>'
+            })
+        ] : [
+            new webpack.optimize.UglifyJsPlugin(),
+            new webpack.DefinePlugin({
+                __DEV__: DEV
+            }),
+            new HtmlWebpackPlugin({
+                inject: 'html',
+                templateContent: '<html><head><title>Luz</title></head><body><div class="luz"/></body></html>'
+            }),
+            new webpack.optimize.DedupePlugin()
         ],
-        resolve: {
-            extensions: ['', '.webpack.js', '.web.js', '.js', '.scss']
-        },
         module: {
             loaders: [
                 {
@@ -40,7 +49,7 @@ const configBuilder = function(DEV) {
                 },
                 {
                     test: /(\.scss|\.css)$/,
-                    loader: ExtractTextPlugin.extract('style', 'css!sass')
+                    loaders: ['style', 'css', 'sass']
                 },
                 {
                     test: /\.jpg$/,
