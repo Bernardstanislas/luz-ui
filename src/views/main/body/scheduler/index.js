@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom';
 import moment from 'moment';
 import './style.scss';
 
+import Track from './track';
+import Mark from './mark';
+
 const trackWidth = 30;
 const radius = 400;
 
@@ -10,55 +13,54 @@ class Scheduler extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            angle: Math.PI / 2,
-            markerVisible: false
+            cursorAngle: Math.PI / 2,
+            markerVisible: false,
+            pressing: false
         }
     }
 
     _handleMouseMove({clientX, clientY, currentTarget}) {
         const {left, top} = currentTarget.getBoundingClientRect();
         const [posX, posY] = [clientX - Math.floor(left) - radius, radius - clientY + Math.floor(top)];
-        const angle = Math.atan2(posY, posX);
-        this.setState({angle});
+        const cursorAngle = Math.atan2(posY, posX);
+        this.setState({cursorAngle});
     }
 
-    _handleMouseEnterTrack({target}) {
-        this.setState({markerVisible: true});
+    _handleMouseDown() {
+        this.setState({
+            pressing: true,
+            pressedAngle: this.state.cursorAngle
+        });
     }
 
-    _handleMouseLeaveTrack({relatedTarget}) {
-        if (relatedTarget !== ReactDOM.findDOMNode(this.refs.marker)) {
-            this.setState({markerVisible: false});
+    _handleMouseUp() {
+        this.setState({
+            pressing: false
+        });
+    }
+
+    _setMarkerVisibilityBuilder() {
+        return (visible, event) => {
+            if (visible || (event && event.relatedTarget !== ReactDOM.findDOMNode(this.refs.marker))) {
+                this.setState({markerVisible: visible});
+            }
         }
     }
 
     render() {
         const {radius} = this.props;
-        const {angle, markerVisible} = this.state;
-        const [markX, markY] = [(radius - trackWidth / 2) * Math.cos(angle) + radius, radius - (radius - trackWidth / 2) * Math.sin(angle)];
-        const markDate = moment().startOf('week').add(1, 'd').add(( (-angle + Math.PI / 2) / (2 * Math.PI)) * 60 * 24 * 7, 'm');
+        const {cursorAngle, markerVisible, pressing, pressedAngle} = this.state;
+        const [markX, markY] = [(radius - trackWidth / 2) * Math.cos(cursorAngle) + radius, radius - (radius - trackWidth / 2) * Math.sin(cursorAngle)];
+        const markDate = moment().startOf('week').add(1, 'd').add(( (-cursorAngle + Math.PI / 2) / (2 * Math.PI)) * 60 * 24 * 7, 'm');
         markDate.minutes(30 * Math.floor(markDate.minutes() / 30)); // Round minutes to 0 or 30
         return (
             <div data-role='scheduler'>
-                <svg data-role='svg' width={2 * radius} height={2 * radius} onMouseMove={::this._handleMouseMove}>
-                    <circle
-                        cx={radius}
-                        cy={radius}
-                        r={radius - trackWidth / 2}
-                        style={{
-                            fill: 'none',
-                            stroke: '#DDD',
-                            strokeWidth: trackWidth
-                        }}
-                        data-role='track'
-                        ref='track'
-                        onMouseEnter={::this._handleMouseEnterTrack}
-                        onMouseLeave={::this._handleMouseLeaveTrack}
-                        />
+                <svg data-role='svg' width={2 * radius} height={2 * radius} onMouseMove={::this._handleMouseMove} onMouseDown={::this._handleMouseDown} onMouseUp={::this._handleMouseUp}>
+                    <Track radius={radius} trackWidth={trackWidth} setMarkerVisibility={this._setMarkerVisibilityBuilder()}/>
                     <text x={radius} y={radius} fill='red'>
                         {markDate.format('dddd HH:mm')}
                     </text>
-                    {markerVisible &&
+                    {(markerVisible || pressing) &&
                         <circle
                             cx={markX}
                             cy={markY}
@@ -69,6 +71,9 @@ class Scheduler extends Component {
                             data-role='marker'
                             ref='marker'
                             />
+                    }
+                    {pressing &&
+                        <Mark radius={radius} trackWidth={trackWidth} startAngle={pressedAngle} endAngle={cursorAngle}/>
                     }
                 </svg>
             </div>
