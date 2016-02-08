@@ -5,7 +5,7 @@ import Main from './main';
 
 const Container = props => {
     const {login} = props;
-    if (!login.logged) {
+    if (login.logged) {
         return <Login {...props}/>;
     } else {
         return <Main {...props}/>;
