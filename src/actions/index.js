@@ -1,6 +1,6 @@
 import {forEach} from 'lodash/collection';
 
-import rootRef, {presenceRef, relaysRef} from '../firebase';
+import rootRef, {presenceRef, relaysRef, timesheetsRef} from '../firebase';
 
 export const ATTEMPT_LOGIN = 'ATTEMPT_LOGIN';
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
@@ -9,6 +9,8 @@ export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 
 export const UPDATE_BASE_PRESENCE = 'UPDATE_BASE_PRESENCE';
 export const UPDATE_RELAY = 'UPDATE_RELAY';
+
+export const UPDATE_TIMESHEETS = 'UPDATE_TIMESHEETS';
 
 const loginRequest = () => ({
     type: LOGIN_REQUEST
@@ -49,6 +51,17 @@ export const attemptLogin = (email, password) => {
                         }
                     });
                 });
+                timesheetsRef.on('value', snapshot => {
+                    const rawTimesheets = snapshot.val();
+                    const flattenTimesheet = (rawTimesheet = {}) => Object.keys(rawTimesheet).map(id => ({
+                        id,
+                        ...(rawTimesheet[id])
+                    }));
+                    dispatch(updateTimesheets({
+                        relay1: flattenTimesheet(rawTimesheets.relay1),
+                        relay2: flattenTimesheet(rawTimesheets.relay2)
+                    }));
+                });
                 dispatch(loginSuccess(authData));
             }
         });
@@ -64,4 +77,9 @@ export const updateRelay = (relayId, switched) => ({
     type: UPDATE_RELAY,
     relayId,
     switched
+});
+
+export const updateTimesheets = timesheets => ({
+    type: UPDATE_TIMESHEETS,
+    timesheets
 });
