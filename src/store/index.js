@@ -1,7 +1,8 @@
 import {compose, createStore, applyMiddleware} from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import createLogger from 'redux-logger';
-import {devTools, persistState} from 'redux-devtools';
+import DevTools from '../containers/dev-tools';
+
 import rootReducer from '../reducers';
 
 const loggerMiddleware = createLogger();
@@ -13,9 +14,7 @@ const createStoreWithMiddleware = __DEV__ ? compose(
         thunkMiddleware,
         loggerMiddleware
     ),
-    devTools(),
-    // Lets you write ?debug_session=<name> in address bar to persist debug sessions
-    persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/))
+    DevTools.instrument()
 ) (createStore) : applyMiddleware(thunkMiddleware)(createStore);
 
 export default function createNotificationStore(initialState) {
