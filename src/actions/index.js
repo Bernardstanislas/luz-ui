@@ -12,6 +12,8 @@ export const UPDATE_RELAY = 'UPDATE_RELAY';
 
 export const UPDATE_TIMESHEETS = 'UPDATE_TIMESHEETS';
 
+export const EDIT_TIMESHEET = 'EDIT_TIMESHEET';
+
 const loginRequest = () => ({
     type: LOGIN_REQUEST
 });
@@ -82,4 +84,9 @@ export const updateRelay = (relayId, switched) => ({
 export const updateTimesheets = timesheets => ({
     type: UPDATE_TIMESHEETS,
     timesheets
+});
+
+export const editTimesheet = timesheetId => ({
+    type: EDIT_TIMESHEET,
+    timesheetId
 });

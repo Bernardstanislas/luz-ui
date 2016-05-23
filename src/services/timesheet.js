@@ -20,3 +20,7 @@ export const addNewTimesheetEntry = (relayId, fromDate, toDate) => {
 export const removeTimesheetEntry = (relayId, timesheetId) => {
     timesheetsRef.child(relayId).child(timesheetId).remove();
 }
+
+export const editTimesheet = (relayId, {id, from, to, active}) => {
+    timesheetsRef.child(relayId).child(id).set({from, to, active});
+}

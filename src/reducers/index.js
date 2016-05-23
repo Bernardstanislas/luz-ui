@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux';
-import {ATTEMPT_LOGIN, LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, UPDATE_BASE_PRESENCE, UPDATE_RELAY, UPDATE_TIMESHEETS} from '../actions';
+import {ATTEMPT_LOGIN, LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, UPDATE_BASE_PRESENCE, UPDATE_RELAY, UPDATE_TIMESHEETS, EDIT_TIMESHEET} from '../actions';
 
 const login = (state = {logged: false, error: null, loading: false}, action) => {
     switch(action.type) {
@@ -40,6 +40,15 @@ const timesheets = (state = {}, action) => {
             return state;
     }
 };
+
+const editingTimesheet = (state = null, action) => {
+    switch (action.type) {
+        case EDIT_TIMESHEET:
+            return action.timesheetId;
+        default:
+            return state;
+    }
+}
 
 export default combineReducers({
     login, basePresence, relays, timesheets
