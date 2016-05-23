@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 
+import {removeTimesheetEntry} from '../../../../services/timesheet';
+
 class Mark extends Component {
     render() {
         const {startAngle, endAngle, radius, trackWidth} = this.props;
@@ -24,6 +26,7 @@ class Mark extends Component {
                 stroke: 'blue',
                 fill: 'none'
             }}
+            onClick={() => removeTimesheetEntry(this.props.relayId, this.props.id)}
             />
         )
     }

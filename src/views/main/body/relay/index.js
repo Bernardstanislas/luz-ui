@@ -5,6 +5,7 @@ import Toggle from 'material-ui/lib/toggle';
 
 import './style.scss';
 
+import {manualToggleRelay} from '../../../../services/relay';
 import {relaysRef} from '../../../../firebase';
 
 class Relay extends Component {
@@ -29,7 +30,7 @@ class Relay extends Component {
     }
 
     handleSwitch(event, switched) {
-        relaysRef.child(this.props.id).set({switched, manual: true});
+        manualToggleRelay(this.props.id, switched);
         this.setState({waiting: true});
     }
 

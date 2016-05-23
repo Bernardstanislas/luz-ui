@@ -17,6 +17,6 @@ const createStoreWithMiddleware = __DEV__ ? compose(
     DevTools.instrument()
 ) (createStore) : applyMiddleware(thunkMiddleware)(createStore);
 
-export default function createNotificationStore(initialState) {
+export default function createReduxStore(initialState) {
     return createStoreWithMiddleware(rootReducer, initialState);
 }

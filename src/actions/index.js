@@ -1,4 +1,4 @@
-import {forEach} from 'lodash/collection';
+import forEach from 'lodash';
 
 import rootRef, {presenceRef, relaysRef, timesheetsRef} from '../firebase';
 
@@ -52,7 +52,7 @@ export const attemptLogin = (email, password) => {
                     });
                 });
                 timesheetsRef.on('value', snapshot => {
-                    const rawTimesheets = snapshot.val();
+                    const rawTimesheets = snapshot.val() || {};
                     const flattenTimesheet = (rawTimesheet = {}) => Object.keys(rawTimesheet).map(id => ({
                         id,
                         ...(rawTimesheet[id])

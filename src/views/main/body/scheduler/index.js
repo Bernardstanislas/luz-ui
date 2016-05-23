@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import moment from 'moment';
 import './style.scss';
 
-import {timesheetsRef} from '../../../../firebase';
+import {addNewTimesheetEntry} from '../../../../services/timesheet';
 
 import Track from './track';
 import Mark from './mark';
@@ -22,22 +22,6 @@ const convertAngleToDate = angle => {
     const markDate = moment().startOf('week').add(1, 'd').add(( (-angle + Math.PI / 2) / (2 * Math.PI)) * 60 * 24 * 7, 'm');
     markDate.minutes(30 * Math.floor(markDate.minutes() / 30)); // Round minutes to 0 or 30
     return markDate;
-}
-
-const convertDateToTimesheetEntry = date => ({
-    d: moment(date).day(),
-    h: moment(date).hour(),
-    m: moment(date).minute()
-});
-
-const addNewTimesheetEntry = (relay, fromDate, toDate) => {
-    const timesheetEntry = {
-        active: true,
-        from: convertDateToTimesheetEntry(fromDate),
-        to: convertDateToTimesheetEntry(toDate)
-    };
-    console.log(timesheetEntry);
-    timesheetsRef.child(relay).push().set(timesheetEntry);
 }
 
 class Scheduler extends Component {
@@ -111,7 +95,7 @@ class Scheduler extends Component {
                     {relay1timesheet.map(({id, from, to}) => {
                         const startAngle = convertDateToAngle(from);
                         const endAngle = convertDateToAngle(to);
-                        return <Mark key={id} radius={radius} trackWidth={trackWidth} startAngle={startAngle} endAngle={endAngle}/>;
+                        return <Mark key={id} id={id} relayId={'relay1'} radius={radius} trackWidth={trackWidth} startAngle={startAngle} endAngle={endAngle}/>;
                     })}
                 </svg>
             </div>

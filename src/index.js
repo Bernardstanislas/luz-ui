@@ -6,9 +6,15 @@ import Container from './views';
 
 import DevTools from './containers/dev-tools';
 
+import {attemptLogin} from './actions';
+import secret from './secret';
+
+
 import './style/main.scss';
 
 export const store = createStore();
+
+store.dispatch(attemptLogin(secret.get('EMAIL'), secret.get('PASSWORD')));
 
 const Main = props => !__DEV__ ? (
     <Provider store={store}>
