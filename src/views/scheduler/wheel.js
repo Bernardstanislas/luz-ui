@@ -21,7 +21,7 @@ const convertDateToAngle = ({d, h, m}) => {
     return result;
 };
 
-const convertAngleToDate = angle => {
+export const convertAngleToDate = angle => {
     const markDate = moment().startOf('week').add(1, 'd').add(( (-angle + Math.PI / 2) / (2 * Math.PI)) * 60 * 24 * 7, 'm');
     markDate.minutes(30 * Math.floor(markDate.minutes() / 30)); // Round minutes to 0 or 30
     return markDate;
@@ -46,10 +46,11 @@ class Track extends Component {
     }
 
     _handleMouseMove({clientX, clientY}) {
-        const {radius, trackWidth} = this.props;
+        const {radius, trackWidth, updatePressingGuide, relayId} = this.props;
         const {left, top} = ReactDOM.findDOMNode(this.refs.bg).getBoundingClientRect();
         const [posX, posY] = [clientX - Math.floor(left) - radius + trackWidth / 2, radius - clientY + Math.floor(top) - trackWidth / 2];
         const cursorAngle = Math.atan2(posY, posX);
+        updatePressingGuide(cursorAngle, this.state.pressing, this.state.markerVisible, relayId);
         this.setState({cursorAngle});
     }
 
@@ -70,6 +71,7 @@ class Track extends Component {
     _setMarkerVisibilityBuilder() {
         return (visible, event) => {
             if (visible || (event && event.relatedTarget !== ReactDOM.findDOMNode(this.refs.marker))) {
+                this.props.updatePressingGuide(this.state.cursorAngle, this.state.pressing, visible, this.props.relayId);
                 this.setState({markerVisible: visible});
             }
         }
@@ -81,13 +83,9 @@ class Track extends Component {
 
         const {cursorAngle, markerVisible, pressing, pressingStartAngle} = this.state;
         const [markX, markY] = cursorAngleToMarkerCoordinates(cursorAngle, radius, trackWidth);
-        const markDate = convertAngleToDate(cursorAngle);
         return (
             <g onMouseMove={::this._handleMouseMove} onMouseDown={::this._handleMouseDown} onMouseUp={::this._handleMouseUp}>
                 <TrackBackground {...this.props} setMarkerVisibility={this._setMarkerVisibilityBuilder()} ref='bg'/>
-                <text x={radius} y={radius} fill='red'>
-                    {markDate.format('dddd HH:mm')}
-                </text>
                 {(markerVisible) &&
                     <circle
                         cx={markX}

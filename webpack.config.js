@@ -55,6 +55,15 @@ const configBuilder = function(DEV) {
                     test: /\.jpg$/,
                     loader: 'url-loader',
                     query: { mimetype: 'image/jpg' }
+                },
+                {
+                    test: /\.svg/,
+                    loader: 'url-loader',
+                    query: { mimetype: 'image/svg' }
+                },
+                {
+                    test: /\.(eot|ttf|woff)/,
+                    loader: 'file-loader'
                 }
             ]
         }

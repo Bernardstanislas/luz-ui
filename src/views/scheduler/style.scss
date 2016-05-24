@@ -1,10 +1,40 @@
 [data-role='scheduler'] {
-    display: flex;
-    justify-content: center;
     user-select: none;
+    position: relative;
 }
 
 [data-role='track'] {
     fill: none;
     stroke: #DDD;
+}
+
+[data-position='wheel-center'] {
+    position: absolute;
+    left: 150px;
+    top: 400px;
+    width: 700px;
+    height: 500px;
+    z-index: -1;
+}
+
+[data-role='pressing-guide'] {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    [data-role='icon'] {
+        font-size: 4em;
+        height: 50px;
+        margin-bottom: 50px;
+        margin-top: 50px;
+    }
+
+    [data-role='relay'] {
+        font-size: 2em;
+        margin-bottom: 50px;
+    }
+
+    [data-role='date'] {
+        font-size: 3em;
+    }
 }
