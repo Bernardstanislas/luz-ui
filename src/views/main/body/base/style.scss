@@ -1,8 +1,0 @@
-@import '../../../../style/palette.scss';
-
-[data-role='base'] {
-    padding: 20px;
-    &[data-present='false'] {
-        color: $error;
-    }
-}
