@@ -3,8 +3,10 @@ import React, {Component} from 'react';
 import {removeTimesheetEntry} from '../../services/timesheet';
 import {cursorAngleToMarkerCoordinates} from './wheel';
 
+import {editTimesheet} from '../../actions';
+
 const Mark = props => {
-    const {startAngle, endAngle, radius, trackWidth, center} = props;
+    const {startAngle, endAngle, radius, trackWidth, center, dispatch} = props;
     let progressPath;
     const [startX, startY] = cursorAngleToMarkerCoordinates(startAngle, radius, trackWidth);
     const [endX, endY] = cursorAngleToMarkerCoordinates(endAngle, radius, trackWidth);
@@ -26,7 +28,7 @@ const Mark = props => {
             stroke: 'blue',
             fill: 'none'
         }}
-        onClick={() => removeTimesheetEntry(props.relayId, props.id)}
+        onClick={() => dispatch(editTimesheet(props.relayId, props.id, props.from, props.to, props.active))}
         />
     )
 }

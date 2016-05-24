@@ -34,6 +34,9 @@ const configBuilder = function(DEV) {
             }),
             new webpack.optimize.DedupePlugin()
         ],
+        resolve: {
+            extensions: ["", ".webpack.js", ".web.js", ".js", ".scss"]
+        },
         module: {
             loaders: [
                 {

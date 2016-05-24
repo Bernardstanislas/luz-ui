@@ -44,12 +44,18 @@ const timesheets = (state = {}, action) => {
 const editingTimesheet = (state = null, action) => {
     switch (action.type) {
         case EDIT_TIMESHEET:
-            return action.timesheetId;
+            return {
+                timesheetId: action.timesheetId,
+                relayId: action.relayId,
+                from: action.from,
+                to: action.to,
+                active: action.active
+            };
         default:
             return state;
     }
 }
 
 export default combineReducers({
-    login, basePresence, relays, timesheets
+    login, basePresence, relays, timesheets, editingTimesheet
 });

@@ -11,8 +11,8 @@ const Container = props => (
     </div>
 );
 
-const select = ({login, basePresence, relays, timesheets}) => {
-    return {login, basePresence, relays, timesheets};
+const select = ({login, basePresence, relays, timesheets, editingTimesheet}) => {
+    return {login, basePresence, relays, timesheets, editingTimesheet};
 }
 
 export default connect(select)(Container);

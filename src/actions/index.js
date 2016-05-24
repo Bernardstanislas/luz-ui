@@ -86,7 +86,11 @@ export const updateTimesheets = timesheets => ({
     timesheets
 });
 
-export const editTimesheet = timesheetId => ({
+export const editTimesheet = (relayId, timesheetId, from, to, active) => ({
     type: EDIT_TIMESHEET,
-    timesheetId
+    relayId,
+    timesheetId,
+    from,
+    to,
+    active
 });

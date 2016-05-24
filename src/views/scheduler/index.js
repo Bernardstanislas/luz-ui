@@ -5,6 +5,8 @@ import './style.scss';
 
 import Wheel from './wheel';
 import PressingGuide from './pressing-guide';
+import Timesheet from './timesheet';
+import Header from './header';
 
 class Scheduler extends Component {
     constructor(props) {
@@ -26,10 +28,13 @@ class Scheduler extends Component {
 
     render() {
         const {pressing, angle, visible, relayId} = this.state;
+        const {editingTimesheet, timesheets} = this.props;
         return (
             <div data-role='scheduler'>
                 <Wheel {...this.props} updatePressingGuide={::this._updatePressingGuide}/>
+                <Header/>
                 {visible && <PressingGuide pressing={pressing} angle={angle} relayId={relayId}/>}
+                {!visible && editingTimesheet && editingTimesheet.timesheetId && <Timesheet timesheet={editingTimesheet} dispatch={this.props.dispatch}/>}
             </div>
         );
     }

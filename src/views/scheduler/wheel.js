@@ -101,10 +101,10 @@ class Track extends Component {
                 {pressing &&
                     <Mark radius={radius} trackWidth={trackWidth} startAngle={pressingStartAngle} endAngle={cursorAngle} center={center}/>
                 }
-                {relayTimesheet.map(({id, from, to}) => {
+                {relayTimesheet.map(({id, from, to, active}) => {
                     const startAngle = convertDateToAngle(from);
                     const endAngle = convertDateToAngle(to);
-                    return <Mark key={id} id={id} relayId={relayId} radius={radius} trackWidth={trackWidth} startAngle={startAngle} endAngle={endAngle} center={center}/>;
+                    return <Mark key={id} id={id} relayId={relayId} radius={radius} trackWidth={trackWidth} startAngle={startAngle} endAngle={endAngle} center={center} {...this.props} from={from} to={to} active={active}/>;
                 })}
             </g>
         );
