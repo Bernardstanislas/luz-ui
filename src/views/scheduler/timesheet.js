@@ -1,4 +1,11 @@
 import React, {Component} from 'react';
+import mdDateTimePicker from 'md-date-time-picker';
+import 'md-date-time-picker/dist/css/mdDateTimePicker.min.css';
+import moment from 'moment';
+import Draggabilly from 'draggabilly';
+
+window.moment = moment;
+window.Draggabilly = Draggabilly;
 
 import {editTimesheet, removeTimesheetEntry} from '../../services/timesheet';
 import {editTimesheet as reduxEditTimesheet} from '../../actions';
@@ -6,14 +13,14 @@ import {editTimesheet as reduxEditTimesheet} from '../../actions';
 const timesheetChangeHandlerBuilder = (timesheet, from) => (newTime) => {
     if (from) {
         editTimesheet(timesheet.relayId, {
-            id: timesheet.timesheetId,
+            id: timesheet.id,
             from: newTime,
             to: timesheet.to,
             active: timesheet.active
         });
     } else {
         editTimesheet(timesheet.relayId, {
-            id: timesheet.timesheetId,
+            id: timesheet.id,
             from: timesheet.from,
             to: newTime,
             active: timesheet.active
@@ -25,7 +32,7 @@ const Timesheet = props => {
     const closeIconClick = () => props.dispatch(reduxEditTimesheet(null));
     const deleteIconClick = () => {
         closeIconClick();
-        removeTimesheetEntry(props.timesheet.relayId, props.timesheet.timesheetId);
+        removeTimesheetEntry(props.timesheet.relayId, props.timesheet.id);
     };
     return (
         <div data-role='timesheet-edition' data-position='wheel-center'>
@@ -70,16 +77,30 @@ class Picker extends Component {
         });
     }
 
+    componentDidMount() {
+        const dialog = new mdDateTimePicker({
+            type: 'time',
+            init: moment().hour(this.props.h).minute(this.props.m),
+            trigger: this.refs.picker
+        });
+        this.picker = dialog;
+        this.refs.picker.addEventListener('onOk', ::this._onTimeChange);
+    }
+
+    componentWillUnmount() {
+        this.refs.picker.removeEventListener('onOk', this._onTimeChange);
+    }
+
     _onDayChange({target: {value: d}}) {
         this.setState({d}, () => this.props.onTimeChange({d: this.state.d, h: this.state.h, m: this.state.m}));
     }
 
-    _onHourChange({target: {value: h}}) {
-        this.setState({h}, () => this.props.onTimeChange({d: this.state.d, h: this.state.h, m: this.state.m}));
-    }
-
-    _onMinuteChange({target: {value: m}}) {
-        this.setState({m}, () => this.props.onTimeChange({d: this.state.d, h: this.state.h, m: this.state.m}));
+    _onTimeChange() {
+        const time = this.picker.time;
+        this.setState({
+            h: time.hours(),
+            m: time.minutes()
+        }, () => this.props.onTimeChange({d: this.state.d, h: this.state.h, m: this.state.m}));
     }
 
     render() {
@@ -94,11 +115,8 @@ class Picker extends Component {
                     <option value={6}>Saturday</option>
                     <option value={0}>Sunday</option>
                 </select>
-                <div data-role='time-picker'>
-                    <input type='number' min={0} max={23} onChange={::this._onHourChange} value={this.state.h}></input>
-                    <b>:</b>
-                    <input type='number' min={0} max={23} onChange={::this._onMinuteChange} value={this.state.m}></input>
-                </div>
+                {moment().hours(this.state.h).minutes(this.state.m).format('HH:mm')}
+                <button onClick={() => this.picker.toggle()} ref='picker'>Picker</button>
             </div>
 
         );

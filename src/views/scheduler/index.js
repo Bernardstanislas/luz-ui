@@ -29,12 +29,14 @@ class Scheduler extends Component {
     render() {
         const {pressing, angle, visible, relayId} = this.state;
         const {editingTimesheet, timesheets} = this.props;
+        const timesheet = editingTimesheet && editingTimesheet.timesheetId && timesheets[editingTimesheet.relayId].filter(({id}) => id === editingTimesheet.timesheetId)[0];
+        if (timesheet) timesheet.relayId = editingTimesheet.relayId;
         return (
             <div data-role='scheduler'>
                 <Wheel {...this.props} updatePressingGuide={::this._updatePressingGuide}/>
                 <Header/>
                 {visible && <PressingGuide pressing={pressing} angle={angle} relayId={relayId}/>}
-                {!visible && editingTimesheet && editingTimesheet.timesheetId && <Timesheet timesheet={editingTimesheet} dispatch={this.props.dispatch}/>}
+                {!visible && editingTimesheet && editingTimesheet.timesheetId && <Timesheet timesheet={timesheet} dispatch={this.props.dispatch}/>}
             </div>
         );
     }
