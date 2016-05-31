@@ -29,8 +29,9 @@ export const convertAngleToDate = angle => {
 
 const Wheel = props => (
     <svg data-role='svg' width={1000} height={1000}>
-        <Track relayId='relay1' center={center} trackWidth={50} radius={450} {...props}/>
-        <Track relayId='relay2' center={center} trackWidth={50} radius={400} {...props}/>
+        <Ruler center={center}/>
+        <Track relayId='relay1' center={center} trackWidth={48} radius={450} {...props}/>
+        <Track relayId='relay2' center={center} trackWidth={48} radius={400} {...props}/>
     </svg>
 );
 
@@ -127,5 +128,63 @@ class TrackBackground extends Component { // Needs to be a class in order to hav
         );
     }
 };
+
+const Ruler = ({center}) => (
+    <g>
+        <circle
+            cx={center.x}
+            cy={center.y}
+            data-role='circles-background'
+            r={401}
+        />
+        {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map((day, index) => <DayRuler day={day} index={index} key={index}/>)}
+    </g>
+);
+
+const dayIndexToAngle = index => {
+    let result = Math.PI / 2 - (2 * Math.PI / 7 * index);
+    if (result < Math.PI) result = result + 2 * Math.PI;
+    return result;
+};
+
+const DayRuler = ({day, index}) => {
+    const startColor='#ABC';
+    const middleColor='#ACB';
+    const radius = 480;
+    const trackWidth = 20;
+    const startAngle = dayIndexToAngle(index);
+    const endAngle = dayIndexToAngle(index + 1);
+    const [startX, startY] = cursorAngleToMarkerCoordinates(startAngle, radius, trackWidth);
+    const [endX, endY] = cursorAngleToMarkerCoordinates(endAngle, radius, trackWidth);
+    const dayPath = `M ${startX} ${startY} A ${radius - trackWidth / 2} ${radius - trackWidth / 2}, 0, 0, 1, ${endX} ${endY}`;
+    return (
+        <g>
+            <defs>
+                <path
+                    d={dayPath}
+                    id={day}
+                />
+                <linearGradient id={`gradient${day}`}>
+                    <stop stopColor={startColor} offset="0%"/>
+                    <stop stopColor={middleColor} offset="50%"/>
+                    <stop stopColor={startColor} offset="100%"/>
+                </linearGradient>
+            </defs>
+            <use xlinkHref={`#${day}`} fill="none" stroke={`url(#gradient${day})`} strokeWidth='30px' />
+            <text
+                x={0}
+                y={0}
+                textAnchor='middle'
+            >
+                <textPath
+                    xlinkHref={`#${day}`}
+                    startOffset="50%"
+                >
+                    {day}
+                </textPath>
+            </text>
+        </g>
+    );
+}
 
 export default Wheel;

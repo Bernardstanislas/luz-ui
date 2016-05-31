@@ -21,15 +21,18 @@ const Mark = props => {
         `;
     }
     return (
-        <path
-        d={progressPath}
-        style={{
-            strokeWidth: 10,
-            stroke: 'blue',
-            fill: 'none'
-        }}
-        onClick={() => dispatch(editTimesheet(props.relayId, props.id, props.from, props.to, props.active))}
-        />
+        <g>
+            <path
+                d={progressPath}
+                style={{
+                    strokeWidth: 30,
+                    stroke: 'blue',
+                    fill: 'none'
+                }}
+                onClick={() => dispatch(editTimesheet(props.relayId, props.id, props.from, props.to, props.active))}
+            />
+        </g>
+
     )
 }
 

@@ -82,3 +82,16 @@
         }
     }
 }
+
+[data-role='ruler-background'] {
+    fill: none;
+    stroke: #ABC;
+    stroke-width: 30px;
+}
+
+[data-role='circles-background'] {
+    fill: none;
+    stroke: #FFF;
+    stroke-width: 110px;
+    z-index: -2;
+}

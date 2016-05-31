@@ -5,8 +5,10 @@ import Switch from './switch';
 const Header = props => (
     <div data-role='header'>
         <Clock/>
-        <Switch relayId='relay1' {...props}/>
-        <Switch relayId='relay2' {...props}/>
+        <div data-role='relays'>
+            <Switch relayId='relay1' {...props}/>
+            <Switch relayId='relay2' {...props}/>
+        </div>
     </div>
 );
 
