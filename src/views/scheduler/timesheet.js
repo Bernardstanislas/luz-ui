@@ -105,18 +105,21 @@ class Picker extends Component {
 
     render() {
         return (
-            <div>
-                <select onChange={::this._onDayChange} value={this.state.d}>
-                    <option value={1}>Monday</option>
-                    <option value={2}>Tuesday</option>
-                    <option value={3}>Wednesday</option>
-                    <option value={4}>Thursday</option>
-                    <option value={5}>Friday</option>
-                    <option value={6}>Saturday</option>
-                    <option value={0}>Sunday</option>
-                </select>
-                {moment().hours(this.state.h).minutes(this.state.m).format('HH:mm')}
-                <button onClick={() => this.picker.toggle()} ref='picker'>Picker</button>
+            <div data-role='day-time-picker'>
+                <div data-role='day-picker'>
+                    <select onChange={::this._onDayChange} value={this.state.d}>
+                        <option value={1}>Monday</option>
+                        <option value={2}>Tuesday</option>
+                        <option value={3}>Wednesday</option>
+                        <option value={4}>Thursday</option>
+                        <option value={5}>Friday</option>
+                        <option value={6}>Saturday</option>
+                        <option value={0}>Sunday</option>
+                    </select>
+                </div>
+                <div data-role='time-picker'>
+                    <button onClick={() => this.picker.toggle()} ref='picker'>{moment().hours(this.state.h).minutes(this.state.m).format('HH:mm')}</button>
+                </div>
             </div>
 
         );
