@@ -12,7 +12,7 @@ const center = {x: 500, y: 500};
 
 // Helpers
 
-export const cursorAngleToMarkerCoordinates = (cursorAngle, radius, trackWidth) => [(radius - trackWidth / 2) * Math.cos(cursorAngle) + 500, 500 - (radius - trackWidth / 2) * Math.sin(cursorAngle)];
+export const cursorAngleToMarkerCoordinates = (cursorAngle, radius, trackWidth) => [(radius - trackWidth / 2) * Math.cos(cursorAngle) + center.x, center.y - (radius - trackWidth / 2) * Math.sin(cursorAngle)];
 
 const convertDateToAngle = ({d, h, m}) => {
     let result = - 2 * Math.PI * (24 * 60 * (d - 1) + 60 * h + m) / 10080 + Math.PI / 2;

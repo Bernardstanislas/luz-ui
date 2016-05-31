@@ -34,7 +34,7 @@ class Scheduler extends Component {
         return (
             <div data-role='scheduler'>
                 <Wheel {...this.props} updatePressingGuide={::this._updatePressingGuide}/>
-                <Header/>
+                <Header {...this.props}/>
                 {visible && <PressingGuide pressing={pressing} angle={angle} relayId={relayId}/>}
                 {!visible && editingTimesheet && editingTimesheet.timesheetId && <Timesheet timesheet={timesheet} dispatch={this.props.dispatch}/>}
             </div>

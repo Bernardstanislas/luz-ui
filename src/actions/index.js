@@ -1,4 +1,4 @@
-import forEach from 'lodash';
+import forEach from 'lodash/forEach';
 
 import rootRef, {presenceRef, relaysRef, timesheetsRef} from '../firebase';
 
@@ -48,9 +48,9 @@ export const attemptLogin = (email, password) => {
                 relaysRef.on('value', snapshot => {
                     const relays = snapshot.val();
                     forEach(relays, ({manual, switched}, relayId) => {
-                        if (!manual) {
+                        // if (!manual) { // Check if the change was triggered by the user (no update then) or by a schedule
                             dispatch(updateRelay(relayId, switched));
-                        }
+                        // }
                     });
                 });
                 timesheetsRef.on('value', snapshot => {
