@@ -4,6 +4,7 @@ import Switch from './switch';
 
 const Header = props => (
     <div data-role='header'>
+        <div data-role='header-background'></div>
         <Clock/>
         <div data-role='relays'>
             <Switch relayId='relay1' {...props}/>
