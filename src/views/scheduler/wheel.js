@@ -4,6 +4,8 @@ import moment from 'moment';
 
 import {addNewTimesheetEntry} from '../../services/timesheet';
 
+import palette from '../../style/palette';
+
 import Mark from './mark';
 
 // Constants
@@ -93,7 +95,7 @@ class Track extends Component {
                         cy={markY}
                         r={5}
                         style={{
-                            fill: 'blue'
+                            fill: palette.primaryColor
                         }}
                         data-role='marker'
                         ref='marker'
@@ -148,8 +150,6 @@ const dayIndexToAngle = index => {
 };
 
 const DayRuler = ({day, index}) => {
-    const startColor='#ABC';
-    const middleColor='#ACB';
     const radius = 480;
     const trackWidth = 20;
     const startAngle = dayIndexToAngle(index);
@@ -164,17 +164,13 @@ const DayRuler = ({day, index}) => {
                     d={dayPath}
                     id={day}
                 />
-                <linearGradient id={`gradient${day}`}>
-                    <stop stopColor={startColor} offset="0%"/>
-                    <stop stopColor={middleColor} offset="50%"/>
-                    <stop stopColor={startColor} offset="100%"/>
-                </linearGradient>
             </defs>
-            <use xlinkHref={`#${day}`} fill="none" stroke={`url(#gradient${day})`} strokeWidth='30px' />
+            <use xlinkHref={`#${day}`} fill="none" stroke={palette.primaryColorDark} strokeWidth='30px' />
             <text
                 x={0}
                 y={0}
                 textAnchor='middle'
+                fill='white'
             >
                 <textPath
                     xlinkHref={`#${day}`}

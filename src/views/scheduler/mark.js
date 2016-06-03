@@ -5,6 +5,8 @@ import {cursorAngleToMarkerCoordinates} from './wheel';
 
 import {editTimesheet} from '../../actions';
 
+import palette from '../../style/palette';
+
 const Mark = props => {
     const {startAngle, endAngle, radius, trackWidth, center, dispatch} = props;
     let progressPath;
@@ -25,8 +27,8 @@ const Mark = props => {
             <path
                 d={progressPath}
                 style={{
-                    strokeWidth: 30,
-                    stroke: 'blue',
+                    strokeWidth: 49,
+                    stroke: palette.accentColor,
                     fill: 'none'
                 }}
                 onClick={() => dispatch(editTimesheet(props.relayId, props.id, props.from, props.to, props.active))}

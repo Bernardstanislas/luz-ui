@@ -10,7 +10,7 @@ import {attemptLogin} from './actions';
 import secret from './secret';
 
 
-import './style/main.scss';
+import './style';
 import 'mdi/css/materialdesignicons.min.css';
 
 export const store = createStore();

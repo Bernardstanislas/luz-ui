@@ -1,0 +1,38 @@
+@import './palette.scss';
+
+[data-role='timesheet-edition'] {
+    display: flex;
+    padding-top: 20px;
+
+    & > div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    [data-role='from'] {
+        flex: 3;
+        font-size: 3em;
+    }
+
+    [data-role='center'] {
+        flex: 1;
+        font-size: 2em;
+    }
+
+    [data-role='to'] {
+        flex: 3;
+        font-size: 3em;
+    }
+
+    [data-role='day-time-picker'] {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        flex: 1;
+
+        & > div {
+            flex: 1;
+        }
+    }
+}

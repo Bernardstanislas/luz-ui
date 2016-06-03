@@ -1,0 +1,39 @@
+@import './palette.scss';
+
+[data-position='wheel-center'] {
+    position: absolute;
+    left: 250px;
+    top: 400px;
+    width: 500px;
+    height: 300px;
+}
+
+[data-role='header'] {
+    position: absolute;
+    left: 320px;
+    top: 200px;
+    width: 360px;
+    height: 200px;
+}
+
+[data-role='pressing-guide'] {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    [data-role='icon'] {
+        font-size: 4em;
+        height: 50px;
+        margin-bottom: 50px;
+        margin-top: 50px;
+    }
+
+    [data-role='relay'] {
+        font-size: 2em;
+        margin-bottom: 50px;
+    }
+
+    [data-role='date'] {
+        font-size: 3em;
+    }
+}

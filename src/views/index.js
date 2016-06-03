@@ -3,8 +3,6 @@ import React, {Component} from 'react';
 
 import Scheduler from './scheduler';
 
-import './style.scss';
-
 const Container = props => (
     <div data-role='main'>
         {props.login.loading && <h1>Logging in...</h1>}
