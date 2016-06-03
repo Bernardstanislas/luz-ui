@@ -2,6 +2,8 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+const dev = JSON.parse(process.env.DEV || 'true');
+
 const configBuilder = function(DEV) {
     return ({
         entry: DEV ? [
@@ -10,7 +12,7 @@ const configBuilder = function(DEV) {
             './src'
         ] : ['./src'],
         output: {
-            path: __dirname,
+            path: path.resolve(process.cwd(), './dist'),
             filename: 'luz-ui.js',
             publicPath: './'
         },
@@ -73,7 +75,7 @@ const configBuilder = function(DEV) {
     });
 };
 
-const config = configBuilder(false);
+const config = configBuilder(dev);
 config.builder = configBuilder;
 
 module.exports = config;
