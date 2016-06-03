@@ -37,8 +37,7 @@ const Timesheet = props => {
     return (
         <div data-role='timesheet-edition' data-position='wheel-center'>
             <div data-role='from'>
-                <i className='mdi mdi-led-on'></i>
-                <Picker {...props.timesheet.from} onTimeChange={timesheetChangeHandlerBuilder(props.timesheet, true)}/>
+                <Picker {...props.timesheet.from} onTimeChange={timesheetChangeHandlerBuilder(props.timesheet, true)} iconName='mdi-lightbulb'/>
             </div>
             <div data-role='center'>
                 <div data-role='close' onClick={closeIconClick}>
@@ -52,8 +51,7 @@ const Timesheet = props => {
                 </div>
             </div>
             <div data-role='to'>
-                <i className='mdi mdi-led-variant-off'></i>
-                <Picker {...props.timesheet.to} onTimeChange={timesheetChangeHandlerBuilder(props.timesheet, false)}/>
+                <Picker {...props.timesheet.to} onTimeChange={timesheetChangeHandlerBuilder(props.timesheet, false)} iconName='mdi-lightbulb-outline'/>
             </div>
         </div>
     );
@@ -105,7 +103,10 @@ class Picker extends Component {
 
     render() {
         return (
-            <div data-role='day-time-picker'>
+            <div data-role='picker'>
+                <div data-role='icon'>
+                    <i className={`mdi ${this.props.iconName}`}></i>
+                </div>
                 <div data-role='day-picker'>
                     <select onChange={::this._onDayChange} value={this.state.d}>
                         <option value={1}>Monday</option>

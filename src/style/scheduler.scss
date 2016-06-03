@@ -12,7 +12,27 @@
 
 [data-role='circles-background'] {
     fill: none;
-    stroke: $primary-color-light;
+    stroke: $divider-color;
     stroke-width: 110px;
     z-index: -2;
+}
+
+[data-role='scheduler-background-top'] {
+    position: absolute;
+    background-color: $primary-color-text;
+    left: 150px;
+    top: 400px;
+    right: 150px;
+    height: 200px;
+    z-index: -1;
+}
+
+[data-role='scheduler-background-bottom'] {
+    position: absolute;
+    background-color: $primary-color-text;
+    left: 169px;
+    top: 600px;
+    right: 169px;
+    height: 247px;
+    z-index: -1;
 }

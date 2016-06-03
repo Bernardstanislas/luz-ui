@@ -12,17 +12,14 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-around;
 
     [data-role='icon'] {
         font-size: 4em;
-        height: 50px;
-        margin-bottom: 50px;
-        margin-top: 50px;
     }
 
     [data-role='relay'] {
         font-size: 2em;
-        margin-bottom: 50px;
     }
 
     [data-role='date'] {

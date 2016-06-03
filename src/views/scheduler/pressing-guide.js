@@ -7,13 +7,17 @@ const PressingGuide = props => {
     return (
         <div data-role='pressing-guide' data-position='wheel-center'>
             <div data-role='icon'>
-                <i className={props.pressing ? 'mdi mdi-led-variant-off' : 'mdi mdi-led-on'}></i>
+                <i className={props.pressing ? 'mdi mdi-lightbulb-outline' : 'mdi mdi-lightbulb'}></i>
             </div>
             <div data-role='relay'>
                 {props.relayId}
             </div>
             <div data-role='date'>
                 {displayedDate}
+            </div>
+            <div data-role='instructions'>
+                {!props.pressing && `Click and hold to draw a new schedule for ${props.relayId}.`}
+                {props.pressing && `Release click when you have reached the shutdown time.`}
             </div>
         </div>
     );

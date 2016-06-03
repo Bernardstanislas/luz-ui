@@ -1,8 +1,9 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto);
+@import './palette';
 
 body {
     font-family: 'Roboto', sans-serif;
-    background-color: #DDD;
+    background-color: $primary-color-text;
     background-image: url('./back.jpg');
     background-size: cover;
     background-repeat: no-repeat;
@@ -15,4 +16,8 @@ html, body {
 [data-role='main'] {
     display: flex;
     justify-content: center;
+}
+
+.mdi-toggle-switch, .mdi-lightbulb {
+    color: $accent-color;
 }

@@ -18,6 +18,7 @@
     [data-role='center'] {
         flex: 1;
         font-size: 2em;
+        justify-content: space-around;
     }
 
     [data-role='to'] {
@@ -25,14 +26,11 @@
         font-size: 3em;
     }
 
-    [data-role='day-time-picker'] {
+    [data-role='picker'] {
         display: flex;
         flex-direction: column;
         align-items: center;
         flex: 1;
-
-        & > div {
-            flex: 1;
-        }
+        justify-content: space-around;
     }
 }

@@ -95,7 +95,7 @@ class Track extends Component {
                         cy={markY}
                         r={5}
                         style={{
-                            fill: palette.primaryColor
+                            fill: palette.accentColor
                         }}
                         data-role='marker'
                         ref='marker'
@@ -165,7 +165,7 @@ const DayRuler = ({day, index}) => {
                     id={day}
                 />
             </defs>
-            <use xlinkHref={`#${day}`} fill="none" stroke={palette.primaryColorDark} strokeWidth='30px' />
+            <use xlinkHref={`#${day}`} fill="none" stroke={palette.primaryColor} strokeWidth='30px' />
             <text
                 x={0}
                 y={0}
